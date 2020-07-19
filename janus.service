@@ -1,0 +1,15 @@
+[Unit]
+Description=Janus WebRTC service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=pi
+ExecStart=/opt/janus/bin/janus
+
+[Install]
+WantedBy=multi-user.target
+
