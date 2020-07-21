@@ -8,7 +8,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=pi
-ExecStart=/opt/janus/bin/janus
+ExecStart=/bin/bash /home/pi/src/pi_monitor/run_janus.sh
 
 [Install]
 WantedBy=multi-user.target
