@@ -1,5 +1,6 @@
 [Unit]
 Description=Camera capture service
+Requires=janus.service
 After=janus.service
 StartLimitIntervalSec=1
 StartLimitBurst=5
@@ -11,6 +12,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=pi
+ExecStartPre=/bin/sleep 10
 ExecStart=/bin/bash /home/pi/src/pi_monitor/capture_gst.sh
 
 [Install]
