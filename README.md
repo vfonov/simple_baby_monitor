@@ -57,7 +57,7 @@ default these ports are open to the whole world, so don't run it on your publicl
 cp janus_etc/janus.plugin.streaming.jcfg  /opt/janus/etc/janus/janus.plugin.streaming.jcfg
 ```
 
-## Capturing live stream
+## Capturing live stream using hardware acceleration
 
 We are going to capture whatever video is coming from `/dev/video0` device, by default this
 is the first web camera attached to the raspberry pi. If you are using RaspiCAM it can also be
@@ -83,7 +83,11 @@ gst-launch-1.0     \
 ```
 On raspberry pi 3 this capture uses approximately 40% of a single cpu core.
 
+If you want to run this on a system without hardware acceleration for h264 encoding (i.e an Intel PC).
+Then you will have to use software codec, replace `omxh264enc` with `x264enc` in the `capture.service`
+
 ## Create services for systemctl
+
 ```
 sudo cp janus.service /etc/systemd/system/janus.service
 sudo cp capture.service /etc/systemd/system/capture.service
@@ -102,11 +106,13 @@ All the processing will handled by janus and web browser. It is possiblt to use 
 This will install simple index.html page to the default location of the NGINX server root:
 The index.html is configured to connect directly to the Janus WebSockets interface and fall-back to REST api
 if it fails. It can be configured to use reverse-proxy feature of NGINX
+
 ```
 sudo cp -r html/* /var/www/html/
 ```
 
 NGINX configuration `/etc/nginx/sites-enabled/default`
+
 ```
 ...
 server {
@@ -119,7 +125,7 @@ server {
 ...
 ```
 
-Optional: reverse proxy setup: `/etc/nginx/sites-enabled/default`, if you don't want to expose janus REST API
+**Optional**: reverse proxy setup: `/etc/nginx/sites-enabled/default`, if you don't want to expose janus REST API
 
 ```
        location /janus-api {
@@ -137,6 +143,7 @@ Optional: reverse proxy setup: `/etc/nginx/sites-enabled/default`, if you don't 
 ```
 
 If you decided to use the reverse proxy setup you will need to edit `/opt/janus/etc/janus/janus.transport.http.jcfg`:
+
 ```
 ...
 general {
