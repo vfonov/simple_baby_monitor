@@ -157,3 +157,5 @@ general {
 ## It's all done
 
 Navigate to the http://pi.local , or use local IP address of your raspberry pi and start watching the live feed.
+
+![](screenshot.jpg)
