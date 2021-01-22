@@ -1,5 +1,11 @@
 # Raspberry PI baby monitor
 
+A simple baby monitor, uses a Raspberry PI + USB webcam to send video/audio, and smartphone
+or PC with a recent browser to recieve it. No special app is needed.
+
+
+## Technical Details
+
 This service works on Raspberry PI, but can be adopted for a PC with Debian/Ubuntu
 It is assumed that a webcam with a microphone is attached to USB
 And supported by linux kernel, creating /dev/video0 and default audio capture device (ALSA)
@@ -7,17 +13,17 @@ And supported by linux kernel, creating /dev/video0 and default audio capture de
 ## Install dependencies (Raspbian)
 
 ```
-# prebuilt janus dependencies
+### prebuilt janus dependencies
 apt install libconfig-dev libmicrohttpd-dev libssl-dev
 
-# gst streamer
+### gst streamer
 apt  install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
              gstreamer1.0-omx-rpi gstreamer1.0-omx-rpi-config  \
              gstreamer1.0-rtsp gstreamer1.0-alsa gstreamer1.0-libav gstreamer1.0-omx 
 
 
-# some libraries need to be compiled from source
-# libnice 0.1.16
+### some libraries need to be compiled from source
+### libnice 0.1.16
 curl https://libnice.freedesktop.org/releases/libnice-0.1.16.tar.gz -o libnice-0.1.16.tar.gz -L
 tar xzf libnice-0.1.16.tar.gz
 cd libnice-0.1.16
@@ -26,7 +32,7 @@ make
 sudo make install # will install into /usr
 cd ..
 
-# libsrtp 2.3.0
+### libsrtp 2.3.0
 curl https://github.com/cisco/libsrtp/archive/v2.3.0.tar.gz -o libsrtp-2.3.0.tar.gz -L
 tar zxf libsrtp-2.3.0.tar.gz
 cd libsrtp-2.3.0
@@ -36,7 +42,7 @@ sudo make install # will install into /usr
 cd ..
 ```
 
-## Compiling Janus-gateway itself
+### Compiling Janus-gateway itself
 
 ```
 curl https://github.com/meetecho/janus-gateway/archive/v0.10.9.tar.gz -o janus-gateway-0.10.9.tar.gz -L
@@ -48,7 +54,7 @@ make
 sudo make install # will install into /opt/janus
 ```
 
-## Define janus configuration
+### Define janus configuration
 
 Janus WebRTC server will be listening on port 8188 (WebSockets interface) and 8088(REST API), by
 default these ports are open to the whole world, so don't run it on your publicly exposed web computer.
@@ -57,7 +63,7 @@ default these ports are open to the whole world, so don't run it on your publicl
 cp janus_etc/janus.plugin.streaming.jcfg  /opt/janus/etc/janus/janus.plugin.streaming.jcfg
 ```
 
-## Capturing live stream using hardware acceleration
+### Send live stream using hardware acceleration of Raspberry PI
 
 We are going to capture whatever video is coming from `/dev/video0` device, by default this
 is the first web camera attached to the raspberry pi. If you are using RaspiCAM it can also be
@@ -86,7 +92,7 @@ On raspberry pi 3 this capture uses approximately 40% of a single cpu core.
 If you want to run this on a system without hardware acceleration for h264 encoding (i.e an Intel PC).
 Then you will have to use software codec, replace `omxh264enc` with `x264enc` in the `capture.service`
 
-## Create services for systemctl
+### Create services for systemctl
 
 ```
 sudo cp janus.service /etc/systemd/system/janus.service
@@ -97,7 +103,7 @@ sudo systemctl enable janus
 sudo systemctl enable capture
 ```
 
-## Web server setup
+### Web server setup
 
 We are using NGINX but any HTTPD server will do the job.
 Copy the contents of html directory into the target location.
