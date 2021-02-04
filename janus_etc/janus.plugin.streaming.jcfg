@@ -138,11 +138,11 @@ general: {
 # example of how to create a simple H.264 mountpoint: you can feed it via
 # an x264enc+rtph264pay pipeline in gstreamer, an ffmpeg script or other.
 #
-h264-sample: {
+video: {
 	type = "rtp"
 	id = 1
         # request = create
-	description = "H.264 live stream"
+	description = "Video"
 	audio = true
 	video = true
 	videoport = 8004
@@ -151,6 +151,19 @@ h264-sample: {
 	#videofmtp = "profile-level-id=42e01f;packetization-mode=1"
         videofmtp = "packetization-mode=1"
         audioport = 8002
+        #audiomcast = "232.3.4.5"
+        audiopt = 111
+        audiortpmap = "opus/48000/2"
+}
+
+audio: {
+	type = "rtp"
+	id = 2
+       # request = create
+	description = "Audio"
+	audio = true
+	video = false
+        audioport = 8001
         #audiomcast = "232.3.4.5"
         audiopt = 111
         audiortpmap = "opus/48000/2"
