@@ -165,3 +165,7 @@ general {
 Navigate to the http://pi.local , or use local IP address of your raspberry pi and start watching the live feed.
 
 ![](screenshot.jpg)
+
+## Time lag
+Around 0.5 sec
+![](delay.jpg)
