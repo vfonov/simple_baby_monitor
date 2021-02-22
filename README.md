@@ -10,7 +10,7 @@ This service works on Raspberry PI, but can be adopted for a PC with Debian/Ubun
 It is assumed that a webcam with a microphone is attached to USB
 And supported by linux kernel, creating /dev/video0 and default audio capture device (ALSA)
 
-## Install dependencies (Raspbian)
+## Install dependencies (Raspberry Pi OS Lite)
 
 ```
 # prebuilt Janus dependencies + gstreamer
@@ -164,7 +164,6 @@ sudo cp nginx/default /etc/nginx/sites-available/default
 sudo systemctl reload nginx
 ```
 
-
 ## It's all done
 
 Navigate to the http://pi.local , or use local IP address of your raspberry pi and start watching the live feed.
@@ -172,5 +171,6 @@ Navigate to the http://pi.local , or use local IP address of your raspberry pi a
 ![](screenshot.jpg)
 
 ## Time lag
+
 Around 0.5 sec
 ![](delay.jpg)
