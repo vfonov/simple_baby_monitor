@@ -156,18 +156,17 @@ video: {
         audiortpmap = "opus/48000/2"
 }
 
-audio: {
-	type = "rtp"
-	id = 2
-       # request = create
-	description = "Audio"
-	audio = true
-	video = false
-        audioport = 8001
-        #audiomcast = "232.3.4.5"
-        audiopt = 111
-        audiortpmap = "opus/48000/2"
-}
+# to enable AUDIO only stream :
+#audio: {
+#	type = "rtp"
+#	id = 2
+#	description = "Audio"
+#	audio = true
+#	video = false
+#       audioport = 8001
+#        audiopt = 111
+#        audiortpmap = "opus/48000/2"
+#}
 
 #
 # The Streaming plugin also supports the broadcasting of datachannel

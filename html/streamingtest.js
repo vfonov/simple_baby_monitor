@@ -43,11 +43,11 @@
 // the whole session.
 //
 
-var server = "/janus";
+var server = "/janus-api";
 if(window.location.protocol === 'http:')
- 	server = "http://" + window.location.hostname + ":8088/janus";
+ 	server = "http://" + window.location.hostname + ":8088/janus-api";
  else
- 	server = "https://" + window.location.hostname + ":8089/janus";
+ 	server = "https://" + window.location.hostname + ":8089/janus-api";
 
 
 var janus = null;

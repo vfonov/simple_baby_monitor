@@ -16,7 +16,7 @@ User=pi
 ExecStartPre=/bin/sleep 10
 
 # start capturing video using Raspberry PI hardware acceleration for compression
-ExecStart=gst-launch-1.0     \
+ExecStart=/usr/bin/gst-launch-1.0     \
   -v v4l2src device=/dev/video0 ! \
       video/x-raw,width=640,height=480,framerate=30/1 ! \
       videorate ! videoconvert ! \
@@ -28,9 +28,25 @@ ExecStart=gst-launch-1.0     \
       audioresample quality=1 ! \
       audio/x-raw,rate=16000,channels=1 ! \
       opusenc bitrate=10000 ! \
-      rtpopuspay ! tee name=t  \
-      t. ! queue ! udpsink host=127.0.0.1 port=8002 \
-      t. ! queue ! udpsink host=127.0.0.1 port=8001 
+      rtpopuspay ! queue ! udpsink host=127.0.0.1 port=8002
+
+
+# start capturing two audio streams (for audio-only channel)
+#ExecStart=gst-launch-1.0     \
+#  -v v4l2src device=/dev/video0 ! \
+#      video/x-raw,width=640,height=480,framerate=30/1 ! \
+#      videorate ! videoconvert ! \
+#      omxh264enc target-bitrate=240000 control-rate=variable ! \
+#      h264parse ! \
+#      rtph264pay config-interval=1 pt=96 ! \
+#      udpsink host=127.0.0.1 port=8004  \
+#   alsasrc device=plughw:1  ! \
+#      audioresample quality=1 ! \
+#      audio/x-raw,rate=16000,channels=1 ! \
+#      opusenc bitrate=10000 ! \
+#      rtpopuspay ! tee name=t  \
+#      t. ! queue ! udpsink host=127.0.0.1 port=8002 \
+#      t. ! queue ! udpsink host=127.0.0.1 port=8001 
 
 
 [Install]
